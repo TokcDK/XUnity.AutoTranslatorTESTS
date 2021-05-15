@@ -376,6 +376,8 @@ namespace XUnity.AutoTranslator.Plugin.Core
             return TemplatedText.PrepareUntranslatedText( text );
          }
 
+         text = text.RemoveReachTextMarkup();
+
          return text;
       }
 
@@ -385,6 +387,8 @@ namespace XUnity.AutoTranslator.Plugin.Core
          {
             return TemplatedText.FixTranslatedText( text, useTranslatorFriendlyArgs );
          }
+
+         text = text.RestoreTags();
 
          return text;
       }

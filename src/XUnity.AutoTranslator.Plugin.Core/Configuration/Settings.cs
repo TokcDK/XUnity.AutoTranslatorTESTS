@@ -121,6 +121,7 @@ namespace XUnity.AutoTranslator.Plugin.Core.Configuration
       public static int MaxTextParserRecursion;
       public static bool HtmlEntityPreprocessing;
       public static bool HandleRichText;
+      public static bool RemoveRichText;
       public static bool EnableTranslationHelper;
       public static RedirectedResourceDetection RedirectedResourceDetectionStrategy;
       public static bool OutputTooLongText;
@@ -241,6 +242,7 @@ namespace XUnity.AutoTranslator.Plugin.Core.Configuration
             MaxTextParserRecursion = PluginEnvironment.Current.Preferences.GetOrDefault( "Behaviour", "MaxTextParserRecursion", 1 );
             HtmlEntityPreprocessing = PluginEnvironment.Current.Preferences.GetOrDefault( "Behaviour", "HtmlEntityPreprocessing", true );
             HandleRichText = PluginEnvironment.Current.Preferences.GetOrDefault( "Behaviour", "HandleRichText", true );
+            RemoveRichText = PluginEnvironment.Current.Preferences.GetOrDefault( "Behaviour", "RemoveRichText", false );
             EnableTranslationHelper = PluginEnvironment.Current.Preferences.GetOrDefault( "Behaviour", "EnableTranslationHelper", false );
             ForceMonoModHooks = PluginEnvironment.Current.Preferences.GetOrDefault( "Behaviour", "ForceMonoModHooks", false );
             InitializeHarmonyDetourBridge = PluginEnvironment.Current.Preferences.GetOrDefault( "Behaviour", "InitializeHarmonyDetourBridge", !Features.SupportsReflectionEmit && PluginEnvironment.Current.AllowDefaultInitializeHarmonyDetourBridge );
