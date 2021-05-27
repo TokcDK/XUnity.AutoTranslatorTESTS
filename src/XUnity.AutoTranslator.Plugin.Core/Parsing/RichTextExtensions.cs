@@ -34,6 +34,8 @@ namespace XUnity.AutoTranslator.Plugin.Core
             translatedText = translatedText.Remove( tag.Index, tag.Length ).Insert( tag.Index, tag.Value.ToLowerInvariant().Replace( " ", string.Empty ) );
          }
 
+         translatedText = translatedText.Replace( "> <", "><" ).Replace( "  ", " " );
+
          return translatedText;
       }
    }
