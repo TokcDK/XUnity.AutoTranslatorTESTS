@@ -68,7 +68,7 @@ namespace XUnity.AutoTranslator.Plugin.Core
          {
             var c = translatedText[ i ]; // translated text char on position i
             if( c == ' ' || c == '　' ) continue; // translator service can break keys and split them with this chars
-            
+
             //Common.Logging.XuaLogger.AutoTranslator.Info( 
             //     "\r\nc:"+ c.ToString()
             //   + "\r\ntranslatorFriendlyKey[ cidx ]"+ translatorFriendlyKey[ cidx ] 
@@ -114,7 +114,7 @@ namespace XUnity.AutoTranslator.Plugin.Core
                var lengthOfKey = endIdx - startIdx;
                var diff = lengthOfKey - key.Length;
 
-               translatedText = translatedText.Remove( startIdx, lengthOfKey ).Insert( startIdx, key );
+               translatedText = translatedText.Remove( startIdx, lengthOfKey ).Insert( startIdx, ( startIdx > 0 && !char.IsWhiteSpace( translatedText[ startIdx - 1 ] ) ? " " : "" ) + key );
 
                i -= diff;
 
