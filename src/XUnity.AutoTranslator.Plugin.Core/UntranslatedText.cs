@@ -383,6 +383,8 @@ namespace XUnity.AutoTranslator.Plugin.Core
 
       public string FixTranslatedText( string text, bool useTranslatorFriendlyArgs )
       {
+         //Common.Logging.XuaLogger.AutoTranslator.Info( "text:"+ text );
+
          if( TemplatedText != null )
          {
             return TemplatedText.FixTranslatedText( text, useTranslatorFriendlyArgs );

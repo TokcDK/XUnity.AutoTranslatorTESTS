@@ -28,10 +28,13 @@ namespace XUnity.AutoTranslator.Plugin.Core
          foreach( var kvp in Arguments )
          {
             var key = kvp.Key;
+            //Common.Logging.XuaLogger.AutoTranslator.Info( "key:"+ key );
             var translatorFriendlyKey = CreateTranslatorFriendlyKey( key );
+            //Common.Logging.XuaLogger.AutoTranslator.Info( "translatorFriendlyKey:" + translatorFriendlyKey );
 
             untranslatedText = untranslatedText.Replace( key, translatorFriendlyKey );
          }
+
          return untranslatedText;
       }
 
@@ -40,9 +43,12 @@ namespace XUnity.AutoTranslator.Plugin.Core
          foreach( var kvp in Arguments )
          {
             var key = kvp.Key;
+            //Common.Logging.XuaLogger.AutoTranslator.Info( "key:"+ key );
             var translatorFriendlyKey = useTranslatorFriendlyArgs ? CreateTranslatorFriendlyKey( key ) : key;
+            //Common.Logging.XuaLogger.AutoTranslator.Info( "translatorFriendlyKey:" + translatorFriendlyKey );
             translatedText = ReplaceApproximateMatches( translatedText, translatorFriendlyKey, key );
          }
+         //Common.Logging.XuaLogger.AutoTranslator.Info( "translatedText:" + translatedText );
          return translatedText;
       }
 
@@ -55,30 +61,53 @@ namespace XUnity.AutoTranslator.Plugin.Core
 
       public static string ReplaceApproximateMatches( string translatedText, string translatorFriendlyKey, string key )
       {
-         var cidx = 0;
-         var startIdx = 0;
+         var cidx = 0; // translatorFriendlyKey position
+         var startIdx = 0; // translatorFriendlyKey start position
 
          for( int i = 0; i < translatedText.Length; i++ )
          {
-            var c = translatedText[ i ];
-            if( c == ' ' || c == '　' ) continue;
+            var c = translatedText[ i ]; // translated text char on position i
+            if( c == ' ' || c == '　' ) continue; // translator service can break keys and split them with this chars
             
-            if( char.ToUpperInvariant( c ) == char.ToUpperInvariant( translatorFriendlyKey[ cidx ] ) )
+            //Common.Logging.XuaLogger.AutoTranslator.Info( 
+            //     "\r\nc:"+ c.ToString()
+            //   + "\r\ntranslatorFriendlyKey[ cidx ]"+ translatorFriendlyKey[ cidx ] 
+            //   );
+
+            var firstloopcheck = true; // prevents infinity move and check with goto CheckChars below
+
+            CheckChars:
+            if( char.ToUpperInvariant( c ) == char.ToUpperInvariant( translatorFriendlyKey[ cidx ] ) ) // translatorFriendlyKey char equal with text char
             {
                if( cidx == 0 )
                {
-                  startIdx = i;
+                  startIdx = i; // when translatorFriendlyKey position is first - set start index to text index
                }
 
-               cidx++;
+               cidx++; // move translatorFriendlyKey current char position
             }
-            else
+            else if( firstloopcheck )
             {
+               bool goandrecheck = cidx > 0; // recheck only when
+
+               // reset translatorFriendlyKey current char position and start index if one of chars was not equal
                cidx = 0;
                startIdx = 0;
+
+               if( goandrecheck )
+               {
+                  firstloopcheck = false; // do not go here after recheck current char
+                  goto CheckChars; // make sure first key's char not equal current text char. to not skip keypairs like ZMDZZMCZ
+               }
             }
 
-            if( cidx == translatorFriendlyKey.Length )
+            //Common.Logging.XuaLogger.AutoTranslator.Info( 
+            //     "\r\ni:"+ i
+            //   + "\r\ncidx" + cidx
+            //   + "\r\nstartIdx" + startIdx
+            //   );
+
+            if( cidx == translatorFriendlyKey.Length ) // replace translatorFriendlyKey to key only when translatorFriendlyKey position equal with length
             {
                int endIdx = i + 1;
 
