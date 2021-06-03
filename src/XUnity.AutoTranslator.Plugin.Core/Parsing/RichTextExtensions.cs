@@ -26,15 +26,16 @@ namespace XUnity.AutoTranslator.Plugin.Core
       {
          if( Settings.HandleRichText || Settings.RemoveRichText ) return translatedText;
 
-         var tags = Regex.Matches( translatedText, @"<[^>]+>" );
+         var tags = Regex.Matches( translatedText, @"<[^<>]+>" );
 
          for( int i = tags.Count - 1; i >= 0; i-- )
          {
             var tag = tags[ i ];
-            translatedText = translatedText.Remove( tag.Index, tag.Length ).Insert( tag.Index, tag.Value.ToLowerInvariant().Replace( " ", string.Empty ) );
+            var newvalue = tag.Value.ToLowerInvariant().Replace( " ", string.Empty );
+            translatedText = translatedText.Remove( tag.Index, tag.Length ).Insert( tag.Index, newvalue );
          }
 
-         translatedText = translatedText.Replace( "> <", "><" ).Replace( "  ", " " );
+         translatedText = translatedText.Replace( "> <", "><" );
 
          return translatedText;
       }
