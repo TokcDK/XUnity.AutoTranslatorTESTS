@@ -371,12 +371,12 @@ namespace XUnity.AutoTranslator.Plugin.Core
 
       public string PrepareUntranslatedText( string text )
       {
+         text = text.RemoveRichTextMarkup();
+
          if( TemplatedText != null )
          {
             return TemplatedText.PrepareUntranslatedText( text );
          }
-
-         text = text.RemoveReachTextMarkup();
 
          return text;
       }

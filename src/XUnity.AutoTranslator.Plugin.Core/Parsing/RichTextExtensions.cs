@@ -10,7 +10,7 @@ namespace XUnity.AutoTranslator.Plugin.Core
       /// </summary>
       /// <param name="input"></param>
       /// <returns></returns>
-      public static string RemoveReachTextMarkup( this string input )
+      public static string RemoveRichTextMarkup( this string input )
       {
          if( Settings.HandleRichText || !Settings.RemoveRichText ) return input;
 
