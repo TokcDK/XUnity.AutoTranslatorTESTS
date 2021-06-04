@@ -385,12 +385,12 @@ namespace XUnity.AutoTranslator.Plugin.Core
       {
          //Common.Logging.XuaLogger.AutoTranslator.Info( "text:"+ text );
 
+         text = text.RestoreTags();
+
          if( TemplatedText != null )
          {
             return TemplatedText.FixTranslatedText( text, useTranslatorFriendlyArgs );
          }
-
-         text = text.RestoreTags();
 
          return text;
       }
